@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class Cw2 extends javax.swing.JFrame { 
     
-      
+      String kopia;
 
     public Cw2() {
         initComponents();
@@ -21,6 +21,7 @@ public class Cw2 extends javax.swing.JFrame {
         grupa.add(jRadioButton2);
         grupa.add(jRadioButton3);
         grupa.add(jRadioButton4);
+        
     }
 
     /**
@@ -43,6 +44,44 @@ public class Cw2 extends javax.swing.JFrame {
         wynik = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        pole1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                pole1InputMethodTextChanged(evt);
+            }
+        });
+        pole1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pole1ActionPerformed(evt);
+            }
+        });
+        pole1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pole1KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pole1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pole1KeyTyped(evt);
+            }
+        });
+
+        pole2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pole2ActionPerformed(evt);
+            }
+        });
+        pole2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pole2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                pole2KeyTyped(evt);
+            }
+        });
 
         jRadioButton1.setText("Dodawanie");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +170,64 @@ public class Cw2 extends javax.swing.JFrame {
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
         
     }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void pole1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_pole1InputMethodTextChanged
+        
+    }//GEN-LAST:event_pole1InputMethodTextChanged
+
+    private void pole1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyTyped
+        kopia = pole1.getText();
+        
+    }//GEN-LAST:event_pole1KeyTyped
+
+    private void pole1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyPressed
+        
+    }//GEN-LAST:event_pole1KeyPressed
+
+    private void pole1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyReleased
+
+            boolean ok = true;
+
+                try {
+                    Integer.parseInt(pole1.getText());
+                } catch ( NumberFormatException exc ) {
+                    ok = false;
+                }
+            if (!ok) {
+                pole1.setText(kopia);
+            }    
+
+
+            wynik.setText(pole1.getText());
+    }//GEN-LAST:event_pole1KeyReleased
+
+    private void pole1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pole1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pole1ActionPerformed
+
+    private void pole2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pole2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pole2ActionPerformed
+
+    private void pole2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole2KeyTyped
+        kopia = pole2.getText();
+    }//GEN-LAST:event_pole2KeyTyped
+
+    private void pole2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole2KeyReleased
+        boolean ok = true;
+
+                try {
+                    Integer.parseInt(pole2.getText());
+                } catch ( NumberFormatException exc ) {
+                    ok = false;
+                }
+            if (!ok) {
+                pole2.setText(kopia);
+            }    
+
+
+            wynik.setText(pole2.getText());
+    }//GEN-LAST:event_pole2KeyReleased
    
     /**
      * @param args the command line arguments
