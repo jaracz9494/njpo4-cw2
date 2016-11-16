@@ -5,6 +5,8 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,10 +19,27 @@ public class Cw2 extends javax.swing.JFrame {
 
     public Cw2() {
         initComponents();
-        grupa.add(jRadioButton1);
-        grupa.add(jRadioButton2);
-        grupa.add(jRadioButton3);
-        grupa.add(jRadioButton4);
+        grupa.add(Dodawanie);
+        grupa.add(Odejmowanie);
+        grupa.add(Mnożenie);
+        grupa.add(Dzielenie);
+
+        Dodawanie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText())));
+
+            }
+        });
+
+
+        Odejmowanie.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) - Integer.parseInt(pole2.getText())));
+
+            }
+        });
         
     }
 
@@ -34,33 +53,54 @@ public class Cw2 extends javax.swing.JFrame {
     private void initComponents() {
 
         grupa = new javax.swing.ButtonGroup();
-        pole1 = new javax.swing.JTextField();
-        pole2 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        Dodawanie = new javax.swing.JRadioButton();
+        Odejmowanie = new javax.swing.JRadioButton();
+        Mnożenie = new javax.swing.JRadioButton();
+        Dzielenie = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        wynik = new javax.swing.JTextField();
+        pole1 = new javax.swing.JFormattedTextField();
+        pole2 = new javax.swing.JFormattedTextField();
+        wynik = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pole1.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                pole1InputMethodTextChanged(evt);
+        Dodawanie.setText("Dodawanie");
+        Dodawanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DodawanieActionPerformed(evt);
             }
         });
+        Dodawanie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                DodawanieKeyTyped(evt);
+            }
+        });
+
+        Odejmowanie.setText("Odejmowanie");
+        Odejmowanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OdejmowanieActionPerformed(evt);
+            }
+        });
+
+        Mnożenie.setText("Mnożenie");
+        Mnożenie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnożenieActionPerformed(evt);
+            }
+        });
+
+        Dzielenie.setText("Dzielenie");
+
+        jLabel1.setText("=");
+
+        pole1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.###"))));
         pole1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pole1ActionPerformed(evt);
             }
         });
         pole1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pole1KeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 pole1KeyReleased(evt);
             }
@@ -69,46 +109,15 @@ public class Cw2 extends javax.swing.JFrame {
             }
         });
 
-        pole2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pole2ActionPerformed(evt);
-            }
-        });
-        pole2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                pole2KeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                pole2KeyTyped(evt);
-            }
-        });
-
-        jRadioButton1.setText("Dodawanie");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton2.setText("Odejmowanie");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton3.setText("Mnożenie");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton4.setText("Dzielenie");
-
-        jLabel1.setText("=");
+        pole2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.###"))));
 
         wynik.setEditable(false);
+        wynik.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        wynik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wynikActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,117 +126,81 @@ public class Cw2 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pole1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(wynik, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 39, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton4))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(Dodawanie)
+                    .addComponent(Mnożenie)
+                    .addComponent(Odejmowanie)
+                    .addComponent(Dzielenie))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(pole1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(wynik, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pole1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(wynik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(wynik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(Dodawanie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(Odejmowanie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton3)
+                .addComponent(Mnożenie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton4)
+                .addComponent(Dzielenie)
                 .addContainerGap(75, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
  
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void DodawanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DodawanieActionPerformed
         int w;
         w = Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText());
         wynik.setText(Integer.toString(w));
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_DodawanieActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void OdejmowanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OdejmowanieActionPerformed
          
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_OdejmowanieActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void MnożenieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnożenieActionPerformed
         
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void pole1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_pole1InputMethodTextChanged
-        
-    }//GEN-LAST:event_pole1InputMethodTextChanged
-
-    private void pole1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyTyped
-        kopia = pole1.getText();
-        
-    }//GEN-LAST:event_pole1KeyTyped
-
-    private void pole1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyPressed
-        
-    }//GEN-LAST:event_pole1KeyPressed
-
-    private void pole1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyReleased
-
-            boolean ok = true;
-
-                try {
-                    Integer.parseInt(pole1.getText());
-                } catch ( NumberFormatException exc ) {
-                    ok = false;
-                }
-            if (!ok) {
-                pole1.setText(kopia);
-            }    
-
-
-            wynik.setText(pole1.getText());
-    }//GEN-LAST:event_pole1KeyReleased
+    }//GEN-LAST:event_MnożenieActionPerformed
 
     private void pole1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pole1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pole1ActionPerformed
 
-    private void pole2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pole2ActionPerformed
+    private void wynikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wynikActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_pole2ActionPerformed
+    }//GEN-LAST:event_wynikActionPerformed
 
-    private void pole2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole2KeyTyped
-        kopia = pole2.getText();
-    }//GEN-LAST:event_pole2KeyTyped
+    private void DodawanieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DodawanieKeyTyped
+        
+    }//GEN-LAST:event_DodawanieKeyTyped
 
-    private void pole2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole2KeyReleased
-        boolean ok = true;
+    private void pole1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyTyped
+        
+    }//GEN-LAST:event_pole1KeyTyped
 
-                try {
-                    Integer.parseInt(pole2.getText());
-                } catch ( NumberFormatException exc ) {
-                    ok = false;
-                }
-            if (!ok) {
-                pole2.setText(kopia);
-            }    
-
-
-            wynik.setText(pole2.getText());
-    }//GEN-LAST:event_pole2KeyReleased
+    private void pole1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyReleased
+        if (Dodawanie.isSelected()) {
+            wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText())));
+        }
+    }//GEN-LAST:event_pole1KeyReleased
    
     /**
      * @param args the command line arguments
@@ -272,15 +245,15 @@ public class Cw2 extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton Dodawanie;
+    private javax.swing.JRadioButton Dzielenie;
+    private javax.swing.JRadioButton Mnożenie;
+    private javax.swing.JRadioButton Odejmowanie;
     private javax.swing.ButtonGroup grupa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JTextField pole1;
-    private javax.swing.JTextField pole2;
-    private javax.swing.JTextField wynik;
+    private javax.swing.JFormattedTextField pole1;
+    private javax.swing.JFormattedTextField pole2;
+    private javax.swing.JFormattedTextField wynik;
     // End of variables declaration//GEN-END:variables
 }
 
