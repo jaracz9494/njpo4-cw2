@@ -8,6 +8,8 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -15,7 +17,51 @@ import javax.swing.JOptionPane;
  */
 public class Cw2 extends javax.swing.JFrame { 
     
-      String kopia;
+    public void puste() {
+        
+        if (pole1.getText().equals("")){
+                pole1.setText("0");
+        }
+        
+        if (pole2.getText().equals("")){
+                pole2.setText("0");
+        }
+    }
+    
+    public void warunek(){
+        
+        if (Dodawanie.isSelected()) {           
+            puste();
+            wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText())));
+        }
+        
+        if (Odejmowanie.isSelected()) {
+            puste();
+            wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) - Integer.parseInt(pole2.getText())));
+        }
+        
+        if (Mnożenie.isSelected()) {
+            puste();
+            wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) * Integer.parseInt(pole2.getText())));
+        }
+        
+        if (Dzielenie.isSelected()) {
+            
+            puste();
+            
+            if (Double.parseDouble(pole2.getText())==0) {
+                
+                wynik.setText("nie dziel przez 0!");
+                
+            } else {
+            
+                wynik.setText(Double.toString(Double.parseDouble(pole1.getText()) / Double.parseDouble(pole2.getText())));
+                
+            }
+        }
+        
+        
+    }
 
     public Cw2() {
         initComponents();
@@ -23,24 +69,8 @@ public class Cw2 extends javax.swing.JFrame {
         grupa.add(Odejmowanie);
         grupa.add(Mnożenie);
         grupa.add(Dzielenie);
+        grupa.add(wylacz);
 
-        Dodawanie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText())));
-
-            }
-        });
-
-
-        Odejmowanie.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) - Integer.parseInt(pole2.getText())));
-
-            }
-        });
-        
     }
 
     /**
@@ -60,7 +90,8 @@ public class Cw2 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pole1 = new javax.swing.JFormattedTextField();
         pole2 = new javax.swing.JFormattedTextField();
-        wynik = new javax.swing.JFormattedTextField();
+        wynik = new javax.swing.JTextField();
+        wylacz = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +122,11 @@ public class Cw2 extends javax.swing.JFrame {
         });
 
         Dzielenie.setText("Dzielenie");
+        Dzielenie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DzielenieActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("=");
 
@@ -110,12 +146,18 @@ public class Cw2 extends javax.swing.JFrame {
         });
 
         pole2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("###0.###"))));
+        pole2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pole2KeyReleased(evt);
+            }
+        });
 
         wynik.setEditable(false);
-        wynik.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        wynik.addActionListener(new java.awt.event.ActionListener() {
+
+        wylacz.setText("wyłącz");
+        wylacz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wynikActionPerformed(evt);
+                wylaczActionPerformed(evt);
             }
         });
 
@@ -124,23 +166,26 @@ public class Cw2 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Dodawanie)
-                    .addComponent(Mnożenie)
-                    .addComponent(Odejmowanie)
-                    .addComponent(Dzielenie))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(pole1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(wynik, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Dodawanie)
+                            .addComponent(Mnożenie)
+                            .addComponent(Odejmowanie)
+                            .addComponent(Dzielenie)
+                            .addComponent(wylacz))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pole1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(wynik, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +197,7 @@ public class Cw2 extends javax.swing.JFrame {
                         .addComponent(pole2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1)
                         .addComponent(wynik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Dodawanie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Odejmowanie)
@@ -160,33 +205,38 @@ public class Cw2 extends javax.swing.JFrame {
                 .addComponent(Mnożenie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Dzielenie)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(wylacz)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
  
     private void DodawanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DodawanieActionPerformed
-        int w;
-        w = Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText());
-        wynik.setText(Integer.toString(w));
+        
+        puste();
+        wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText())));
+        
     }//GEN-LAST:event_DodawanieActionPerformed
 
     private void OdejmowanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OdejmowanieActionPerformed
-         
+        
+        puste();
+        wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) - Integer.parseInt(pole2.getText())));
+        
     }//GEN-LAST:event_OdejmowanieActionPerformed
 
     private void MnożenieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnożenieActionPerformed
+        
+        puste();
+        wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) * Integer.parseInt(pole2.getText())));
         
     }//GEN-LAST:event_MnożenieActionPerformed
 
     private void pole1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pole1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pole1ActionPerformed
-
-    private void wynikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wynikActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_wynikActionPerformed
 
     private void DodawanieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DodawanieKeyTyped
         
@@ -197,10 +247,36 @@ public class Cw2 extends javax.swing.JFrame {
     }//GEN-LAST:event_pole1KeyTyped
 
     private void pole1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole1KeyReleased
-        if (Dodawanie.isSelected()) {
-            wynik.setText(Integer.toString(Integer.parseInt(pole1.getText()) + Integer.parseInt(pole2.getText())));
-        }
+
+        warunek();
+        
     }//GEN-LAST:event_pole1KeyReleased
+
+    private void pole2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pole2KeyReleased
+        
+        warunek();
+        
+    }//GEN-LAST:event_pole2KeyReleased
+
+    private void DzielenieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DzielenieActionPerformed
+        
+        puste();
+        
+        if (Double.parseDouble(pole2.getText())==0) {
+                
+                wynik.setText("nie dziel przez 0!");
+                
+            } else {
+            
+                wynik.setText(Double.toString(Double.parseDouble(pole1.getText()) / Double.parseDouble(pole2.getText())));
+                
+            }
+        
+    }//GEN-LAST:event_DzielenieActionPerformed
+
+    private void wylaczActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wylaczActionPerformed
+        wynik.setText("");
+    }//GEN-LAST:event_wylaczActionPerformed
    
     /**
      * @param args the command line arguments
@@ -253,7 +329,8 @@ public class Cw2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JFormattedTextField pole1;
     private javax.swing.JFormattedTextField pole2;
-    private javax.swing.JFormattedTextField wynik;
+    private javax.swing.JRadioButton wylacz;
+    private javax.swing.JTextField wynik;
     // End of variables declaration//GEN-END:variables
 }
 
